@@ -5,6 +5,10 @@ const dotenv=require("dotenv");
 //used to schedule task 
 const cron= require("node-cron");
 const mongoose= require("mongoose");
+const { sendDetailsProspectEmail } = require("./emailServices/sendDetailProspect");
+const { sendEligibiltyEmail } = require("./emailServices/sendEligibiltyEmail");
+const { BloodDonationReminderMail } = require("./emailServices/sendBloodDonationReminder");
+const { sendDonorDetails } = require("./emailServices/sendDonorDetails");
 dotenv.config();
 
 //server
@@ -14,7 +18,10 @@ const PORT=process.env.PORT;
 //Schedule Tasks
 const run= ()=>{
     cron.schedule('* * * * * *',()=>{
-        console.log("Running a task every second");
+        sendDetailsProspectEmail();
+        sendEligibiltyEmail();
+        BloodDonationReminderMail();
+        sendDonorDetails();
     })
 }
 // run();
